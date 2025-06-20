@@ -19,7 +19,8 @@
     "generate": "tsx src/index.ts",
     "prepare": "husky",
     "check:build": "tsc --noEmit",
-    "prepush": "npm run check:build"
+    "prepush": "npm run check:build",
+    "commit": "git add -A && cz"
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,8 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.29.0",
     "eslint-plugin-react": "^7.37.5",
     "fast-glob": "^3.3.3",
@@ -66,5 +69,10 @@
     "*.{json,md}": [
       "prettier --write"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }

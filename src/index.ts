@@ -30,8 +30,16 @@ async function buildIcons() {
     }
 
     const componentCode = generateIconComponent(componentName, viewBox, nodes);
+
+    fs.writeFileSync(path.join(OUTPUT_DIR, `${componentName}.tsx`), componentCode);
+
+    exportLines.push(`export {${componentName}} from './icons/${componentName}';`);
   }
+
+  fs.writeFileSync(INDEX_FILE, exportLines.join('\n') + '\n');
 }
+
+buildIcons();
 
 function toPascalCase(str: string): string {
   return str.replace(/(^\w|-\w)/g, (match) => match.replace('-', '').toUpperCase());

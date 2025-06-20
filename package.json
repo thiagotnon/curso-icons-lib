@@ -1,10 +1,22 @@
 {
   "name": "curso-icons-lib",
   "version": "1.0.0",
-  "main": "index.js",
   "type": "module",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  ".": {
+    "type": "./dist/index.d.ts",
+    "import": "./dist/index.es.js",
+    "require": "./dist/index.cjs.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run generate && vite build",
+    "generate": "tsx src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -18,6 +30,10 @@
   },
   "homepage": "https://github.com/thiagotnon/curso-icons-lib#readme",
   "description": "",
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
   "devDependencies": {
     "@types/node": "^24.0.3",
     "@types/react": "^19.1.8",

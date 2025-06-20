@@ -1,0 +1,4 @@
+echo  "📦 Rodando verificação da build (check:build)..."
+npm run prepush
+
+echo  "🚀 Enviando para o repositório...\n"

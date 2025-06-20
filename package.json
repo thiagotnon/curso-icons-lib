@@ -16,7 +16,10 @@
   },
   "scripts": {
     "build": "npm run generate && vite build",
-    "generate": "tsx src/index.ts"
+    "generate": "tsx src/index.ts",
+    "prepare": "husky",
+    "check:build": "tsc --noEmit",
+    "prepush": "npm run check:build"
   },
   "repository": {
     "type": "git",
@@ -35,6 +38,8 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.29.0",
     "@types/node": "^24.0.3",
     "@types/react": "^19.1.8",
@@ -44,11 +49,22 @@
     "eslint-plugin-react": "^7.37.5",
     "fast-glob": "^3.3.3",
     "globals": "^16.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "prettier": "3.5.3",
     "svgo": "^3.3.2",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   }
 }

@@ -23,6 +23,13 @@ async function buildIcons() {
     const viewBox = extractViewBox(optimizedSvg);
 
     const nodes = extractSvgNodes(optimizedSvg);
+
+    if (nodes.length === 0) {
+      console.warn(`No valid SVG nodes found in ${filePath}`);
+      continue;
+    }
+
+    const componentCode = generateIconComponent(componentName, viewBox, nodes);
   }
 }
 
@@ -102,4 +109,24 @@ function extractSvgNodes(svg: string): SvgNode[] {
   }
 
   return nodes;
+}
+
+export function generateIconComponent(name: string, viewBox: string, nodes: SvgNode[]): string {
+  const elements = nodes.map(([tag, attrs]) => `["${tag}", ${JSON.stringify(attrs)}]`).join(',\n');
+
+  return `
+import { createElement, ReactElement } from 'react';
+import { IconBase, IconProps } from '../IconBase';
+
+const paths = [${elements}] as const;
+
+export const ${name} = (props: IconProps): ReactElement<IconProps> =>
+  createElement(
+    IconBase,
+    { viewBox: "${viewBox}", ...props },
+    paths.map(([tag, attrs], i) =>
+      createElement(tag, { key: i, ...attrs })
+    )
+  );
+`;
 }
